@@ -1,0 +1,18 @@
+{
+    "name": "rosbot",
+    "version": "0.1.0",
+    "description": "Serial communication extension for Rosbot running the Kittenbot v4.0 firmware",
+    "license": "Apache",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "main.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "preferredEditor": "tsprj"
+}
