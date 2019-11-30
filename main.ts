@@ -21,6 +21,22 @@ namespace rosbot {
         M2B = 3
     }
 
+    // for Powerbrick initialization
+    const SerialPort = [
+        [SerialPin.P0,  SerialPin.P8],   // Port1
+        [SerialPin.P1,  SerialPin.P12],  // Port2
+        [SerialPin.P2,  SerialPin.P13],  // Port3
+        [SerialPin.P14, SerialPin.P15]  // Port4
+    ]
+
+    // for Powerbrick initialization
+    export enum SerialPorts {
+        Port1 = 0,
+        Port2 = 1,
+        Port3 = 2,
+        Port4 = 3
+    }
+
     let initialized = false
 
     /**
@@ -57,6 +73,22 @@ namespace rosbot {
         Reset()
     }
 
+    /**
+    * Set the serial communication with the Rosbot baseboard from a Powerbrick port
+    * @param port the Powerbrick communication port
+    */
+    //% weight=10
+    //% blockId=rosbot_powerbrick_initialize block="Rosbot <-> Powerbrick initialize|Port %port"
+    //% port.fieldEditor="gridpicker" tx.fieldOptions.columns=3
+    //% port.fieldOptions.tooltips="false"
+    //% port.defl=SerialPorts.Port1
+    //% blockGap=8 inlineInputMode=inline
+    //% group="Configuration"
+    export function powerbrick_initialize(port: SerialPorts) {
+        initialize(SerialPort[port][0], SerialPort[port][1])
+    }
+
+
     //% blockId=rosbot_servo block="Servo|%index|degree %degree|speed %speed"
     //% weight=50
     //% blockGap=50
@@ -84,7 +116,7 @@ namespace rosbot {
     }
 
 
-    //% blockId=rosbot_motor_dual block="Motor|speed %speed1|speed %speed2"
+    //% blockId=rosbot_motor_dual block="Motor|M1A speed %speed1|M1B speed %speed2"
     //% weight=43
     //% speed1.min=-255 speed1.max=255
     //% speed2.min=-255 speed2.max=255
@@ -97,7 +129,7 @@ namespace rosbot {
         writeToSerial("M204 " + speed1 + " " + speed2 + " 0", 0)
     }
 
-    //% blockId=rosbot_motor_quad block="Motor|speed %speed1|speed %speed2|speed %speed3|speed %speed4"
+    //% blockId=rosbot_motor_quad block="Motor|M1A speed %speed1|M1B speed %speed2|M2A speed %speed3|M2B speed %speed4"
     //% weight=42
     //% speed1.min=-255 speed1.max=255
     //% speed2.min=-255 speed2.max=255
